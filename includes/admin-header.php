@@ -42,3 +42,5 @@ $baseUrl = '/snapspace';
         </header>
 
         <main class="admin-content">
+
+            <?php require __DIR__ . '/flash-message.php'; ?>

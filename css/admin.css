@@ -465,3 +465,30 @@ textarea.admin-form-control {
         padding: 28px 22px;
     }
 }
+
+/* Flash messages */
+
+.admin-alert {
+    margin-bottom: 24px;
+    padding: 14px 16px;
+    border: 1px solid transparent;
+    border-radius: var(--admin-radius);
+}
+
+.admin-alert-success {
+    color: #285c3a;
+    background-color: #e2f3e7;
+    border-color: #9acaaa;
+}
+
+.admin-alert-error {
+    color: #722b2b;
+    background-color: #f7dddd;
+    border-color: #dca4a4;
+}
+
+.admin-alert-warning {
+    color: #725512;
+    background-color: #fff1c9;
+    border-color: #e2c66c;
+}

@@ -39,10 +39,6 @@ $navigation = [
                     <?= $label ?>
                 </a>
             <?php endforeach; ?>
-
-            <a href="<?= $baseUrl ?>/admin/login.php">
-                Administration
-            </a>
         </nav>
 
     </div>

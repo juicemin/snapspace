@@ -7,14 +7,6 @@ $pageTitle = 'Administration Dashboard';
 $activeSection = 'dashboard';
 $adminName = $_SESSION['admin_name'] ?? 'Admin';
 
-/*
-Later, after authentication is completed, replace this with:
-
-session_start();
-require_once __DIR__ . '/../includes/auth.php';
-$adminName = $_SESSION['admin_name'] ?? 'Admin';
-*/
-
 $counts = [
     'creators' => 0,
     'albums' => 0,

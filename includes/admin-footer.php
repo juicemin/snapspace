@@ -10,6 +10,7 @@
 </div>
 
 <script src="/snapspace/js/main.js"></script>
+<script src="/snapspace/js/delete-confirmation.js"></script>
 
 </body>
 </html>

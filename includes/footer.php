@@ -8,6 +8,7 @@
             <a href="/snapspace/creators.php">Creators</a>
             <a href="/snapspace/albums.php">Albums</a>
             <a href="/snapspace/photos.php">Photos</a>
+            <a href="/snapspace/admin/login.php">Administrator Login</a>
         </div>
     </div>
 </footer>

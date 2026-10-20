@@ -18,8 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    if ($username === '' || $password === '') {
+    if ($username === '' && $password === '') {
         $errorMessage = 'Please enter your username and password.';
+    } elseif ($username === '') {
+        $errorMessage = 'Please enter your username.';
+    } elseif ($password === '') {
+        $errorMessage = 'Please enter your password.';
     } else {
         $statement = $pdo->prepare(
             'SELECT idadministrator, username, password_hash
