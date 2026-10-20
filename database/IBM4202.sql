@@ -354,16 +354,6 @@ VALUES
     4,
     8
   );
-
-/* Development administrator account
--Username: admin
--The password is communicated privately to group members.*/
-
-INSERT INTO `administrator` (`username`, `password_hash`)
-VALUES (
-    'admin',
-    '$2y$10$4vh0t9jBiRWpYXsf6LnFguOLnm1RFiqVBfznZhTxgMKmz72qvPZ12'
-);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
