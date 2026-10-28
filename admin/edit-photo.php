@@ -131,78 +131,275 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once __DIR__ . '/../includes/admin-header.php';
 ?>
 
-<div class="admin-content-header">
-    <div class="header-left">
-        <h1>Edit Photo Record</h1>
-        <p class="subtitle">Modify metadata and relationships for Photo #<?php echo htmlspecialchars($idphoto); ?></p>
-    </div>
-    <div class="header-right">
-        <a href="manage-photos.php" class="btn btn-secondary">&larr; Back to Photos</a>
-    </div>
-</div>
+<!-- Scoped Admin Form Styling -->
+<style>
+.form-page-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem 0 3rem 0;
+    box-sizing: border-box;
+}
 
-<div class="admin-form-container">
-    <?php if (!empty($errors)): ?>
-        <div class="admin-error-box">
-            <ul>
-                <?php foreach ($errors as $error): ?>
-                    <li><?php echo htmlspecialchars($error); ?></li>
-                <?php endforeach; ?>
-            </ul>
+.form-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-page-header h1 {
+    font-size: 1.8rem;
+    color: #3b281c;
+    margin: 0 0 0.3rem 0;
+}
+
+.form-page-header .subtitle {
+    color: #6c5a4f;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.btn-back-link {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #ede7e1;
+    color: #4a382c !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.btn-back-link:hover {
+    background-color: #ded6ce;
+}
+
+.card-form-box {
+    background: #ffffff;
+    border: 1px solid #e0d8d0;
+    border-radius: 8px;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.admin-alert-danger {
+    background-color: #fbeae8;
+    border-left: 4px solid #c93b2b;
+    padding: 1rem 1.25rem;
+    border-radius: 4px;
+    margin-bottom: 1.75rem;
+    color: #8c281d;
+}
+
+.admin-alert-danger ul {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+.admin-alert-danger li {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.form-row {
+    margin-bottom: 1.4rem;
+}
+
+.form-row label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #3b281c;
+    margin-bottom: 0.45rem;
+}
+
+.form-row .req {
+    color: #c93b2b;
+}
+
+.input-text, .input-select, .input-textarea {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid #c7b9b0;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    color: #2b1f17;
+    background-color: #faf8f5;
+    box-sizing: border-box;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.input-text:focus, .input-select:focus, .input-textarea:focus {
+    border-color: #5c4333;
+    background-color: #ffffff;
+    outline: none;
+}
+
+.edit-preview-card {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    background-color: #faf8f5;
+    padding: 0.85rem;
+    border: 1px solid #e2dad2;
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+}
+
+.edit-preview-img {
+    width: 90px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ded6ce;
+    display: block;
+}
+
+.preview-desc {
+    font-size: 0.85rem;
+    color: #6c5a4f;
+}
+
+.input-file-control {
+    width: 100%;
+    padding: 0.6rem;
+    background: #faf8f5;
+    border: 1px dashed #c7b9b0;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.field-hint {
+    display: block;
+    font-size: 0.8rem;
+    color: #7b6c62;
+    margin-top: 0.35rem;
+}
+
+.form-footer-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #ede7e1;
+}
+
+.btn-submit-action {
+    padding: 0.7rem 1.6rem;
+    background-color: #3b281c;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-submit-action:hover {
+    background-color: #553c2b;
+}
+
+.btn-cancel-action {
+    display: inline-block;
+    padding: 0.7rem 1.4rem;
+    background-color: transparent;
+    color: #6c5a4f !important;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.btn-cancel-action:hover {
+    color: #2b1f17 !important;
+    text-decoration: underline;
+}
+</style>
+
+<div class="form-page-container">
+    <div class="form-page-header">
+        <div>
+            <h1>Edit Photo Record</h1>
+            <p class="subtitle">Modify metadata and relationships for Photo #<?php echo htmlspecialchars($idphoto); ?></p>
         </div>
-    <?php endif; ?>
+        <a href="manage-photos.php" class="btn-back-link">&larr; Back to Photos</a>
+    </div>
 
-    <form method="POST" action="edit-photo.php?id=<?php echo htmlspecialchars($idphoto); ?>" enctype="multipart/form-data" class="admin-form">
-        <div class="form-group">
-            <label for="title">Photo Title: <span class="required">*</span></label>
-            <input type="text" name="title" id="title" maxlength="45" required value="<?php echo htmlspecialchars($title); ?>">
-        </div>
-
-        <div class="form-group">
-            <label>Current Image Preview:</label>
-            <div class="preview-box">
-                <?php $currentPreview = !empty($imageurl) ? '../' . ltrim(htmlspecialchars($imageurl), '/') : '../assets/images/image-placeholder.png'; ?>
-                <img src="<?php echo $currentPreview; ?>" alt="Current Photo" style="max-height: 120px; border-radius: 4px; border: 1px solid #ddd;">
+    <div class="card-form-box">
+        <?php if (!empty($errors)): ?>
+            <div class="admin-alert-danger">
+                <ul>
+                    <?php foreach ($errors as $error): ?>
+                        <li><?php echo htmlspecialchars($error); ?></li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
-            <label for="photo_file" style="margin-top: 0.5rem;">Replace Image (Optional):</label>
-            <input type="file" name="photo_file" id="photo_file" accept="image/jpeg,image/png,image/webp">
-        </div>
+        <?php endif; ?>
 
-        <div class="form-group">
-            <label for="idcreator">Associated Creator:</label>
-            <select name="idcreator" id="idcreator">
-                <option value="">-- No Creator Selected --</option>
-                <?php foreach ($creators as $creator): ?>
-                    <option value="<?php echo htmlspecialchars($creator['idcreator']); ?>" <?php echo ($idcreator == $creator['idcreator']) ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($creator['name']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
+        <form method="POST" action="edit-photo.php?id=<?php echo htmlspecialchars($idphoto); ?>" enctype="multipart/form-data">
+            <div class="form-row">
+                <label for="title">Photo Title <span class="req">*</span></label>
+                <input type="text" name="title" id="title" class="input-text" maxlength="45" required value="<?php echo htmlspecialchars($title); ?>">
+                <span class="field-hint">Maximum 45 characters.</span>
+            </div>
 
-        <div class="form-group">
-            <label for="idalbum">Associated Album:</label>
-            <select name="idalbum" id="idalbum">
-                <option value="">-- No Album Selected (Standalone) --</option>
-                <?php foreach ($albums as $album): ?>
-                    <option value="<?php echo htmlspecialchars($album['idalbum']); ?>" <?php echo ($idalbum == $album['idalbum']) ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($album['title']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <small class="form-hint">Selected album must belong to the selected creator.</small>
-        </div>
+            <div class="form-row">
+                <label>Current Image & Replacement</label>
+                <div class="edit-preview-card">
+                    <?php 
+                        $rawUrl = $imageurl ?? '';
+                        $currentPreview = !empty($rawUrl) ? ((strpos($rawUrl, 'http') === 0) ? $rawUrl : '../' . ltrim($rawUrl, '/')) : '../assets/images/image-placeholder.png'; 
+                    ?>
+                    <img src="<?php echo htmlspecialchars($currentPreview); ?>" alt="Current Photo" class="edit-preview-img" onerror="this.onerror=null; this.src='../assets/images/image-placeholder.png';">
+                    <div class="preview-desc">
+                        <strong>Current File Reference:</strong><br>
+                        <code><?php echo htmlspecialchars($imageurl ?: 'Default placeholder'); ?></code>
+                    </div>
+                </div>
+                <input type="file" name="photo_file" id="photo_file" class="input-file-control" accept="image/jpeg,image/png,image/webp">
+                <span class="field-hint">Leave blank if you wish to keep the existing image.</span>
+            </div>
 
-        <div class="form-group">
-            <label for="comment">Photo Comment / Story:</label>
-            <textarea name="comment" id="comment" rows="4" maxlength="140"><?php echo htmlspecialchars($comment); ?></textarea>
-        </div>
+            <div class="form-row">
+                <label for="idcreator">Associated Creator</label>
+                <select name="idcreator" id="idcreator" class="input-select">
+                    <option value="">-- No Creator Selected --</option>
+                    <?php foreach ($creators as $creator): ?>
+                        <option value="<?php echo htmlspecialchars($creator['idcreator']); ?>" <?php echo ($idcreator == $creator['idcreator']) ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($creator['name']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <span class="field-hint">Update creator association for this photograph.</span>
+            </div>
 
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Update Photo</button>
-            <a href="manage-photos.php" class="btn btn-secondary">Cancel</a>
-        </div>
-    </form>
+            <div class="form-row">
+                <label for="idalbum">Associated Album</label>
+                <select name="idalbum" id="idalbum" class="input-select">
+                    <option value="">-- No Album Selected (Standalone) --</option>
+                    <?php foreach ($albums as $album): ?>
+                        <option value="<?php echo htmlspecialchars($album['idalbum']); ?>" <?php echo ($idalbum == $album['idalbum']) ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($album['title']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <span class="field-hint"><strong>Important:</strong> If selected, this album must strictly belong to the chosen creator.</span>
+            </div>
+
+            <div class="form-row">
+                <label for="comment">Photo Story / Comment</label>
+                <textarea name="comment" id="comment" class="input-textarea" rows="4" maxlength="140"><?php echo htmlspecialchars($comment); ?></textarea>
+                <span class="field-hint">Maximum 140 characters.</span>
+            </div>
+
+            <div class="form-footer-actions">
+                <button type="submit" class="btn-submit-action">Update Photo Record</button>
+                <a href="manage-photos.php" class="btn-cancel-action">Cancel</a>
+            </div>
+        </form>
+    </div>
 </div>
 
 <?php require_once __DIR__ . '/../includes/admin-footer.php'; ?>
