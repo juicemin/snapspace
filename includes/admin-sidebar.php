@@ -49,7 +49,7 @@ $activeSection = $activeSection ?? '';
             View Website
         </a>
 
-        <a href="<?= $baseUrl ?>/admin/logout.php">
+        <a href="<?= $baseUrl ?>/logout.php">
             Log Out
         </a>
     </div>

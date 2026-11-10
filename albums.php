@@ -20,7 +20,7 @@ $albums = [];
 $creators = [];
 $query = isset($_GET['q']) && is_string($_GET['q']) ? trim($_GET['q']) : '';
 $creatorId = isset($_GET['creator']) && $_GET['creator'] !== '' ? $positiveId($_GET['creator']) : null;
-if ((isset($_GET['q']) && !is_string($_GET['q'])) || strlen($query) > 500 || $creatorId === false) {
+if ((isset($_GET['q']) && !is_string($_GET['q'])) || strlen($query) > 100 || $creatorId === false) {
     http_response_code(400);
     $error = 'Enter a valid title search and select a valid creator.';
 }
@@ -57,7 +57,35 @@ require __DIR__ . '/includes/header.php';
     <h1>Albums</h1>
     <p>Explore photo collections and the creators behind them.</p>
     <form method="get" action="albums.php" class="album-filters">
-        <div><label for="q">Search album titles</label><input id="q" name="q" type="search" maxlength="125" value="<?= $escape($query) ?>"></div>
+        <div class="search-input-wrapper">
+
+            <label for="album-search">
+                Search album titles
+            </label>
+
+            <input
+                id="album-search"
+                name="q"
+                type="search"
+                maxlength="100"
+                value="<?= $escape($query) ?>"
+                placeholder="Search album titles..."
+                autocomplete="off"
+                aria-autocomplete="list"
+                aria-controls="album-search-suggestions"
+                data-search-suggestions
+                data-suggestion-type="album"
+            >
+
+            <div
+                class="search-suggestions"
+                id="album-search-suggestions"
+                role="listbox"
+                aria-live="polite"
+                hidden
+            ></div>
+
+        </div>
         <div><label for="creator">Creator</label><select id="creator" name="creator"><option value="">All creators</option>
             <?php foreach ($creators as $creator): ?><option value="<?= (int) $creator['idcreator'] ?>" <?= (int) $creatorId === (int) $creator['idcreator'] ? 'selected' : '' ?>><?= $escape($creator['name']) ?></option><?php endforeach; ?>
         </select></div>

@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/auth.php';
 // Keep a fail-closed guard until the shared authentication contract is finalized.
-// TODO: Review duplicate checks and align unauthenticated redirects with shared auth.
 if (session_status() !== PHP_SESSION_ACTIVE) {
     http_response_code(503);
     exit('Album administration is unavailable until shared authentication starts the session.');

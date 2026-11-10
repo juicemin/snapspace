@@ -62,7 +62,7 @@ if (!empty($photoId) && is_numeric($photoId) && isset($pdo)) {
 <!-- Include module stylesheet -->
 <link rel="stylesheet" href="css/photo.css">
 
-<main class="gallery-container">
+<section class="gallery-container">
     <?php if ($photo): ?>
         <!-- Breadcrumb / Back Link -->
         <nav class="details-breadcrumb">
@@ -160,6 +160,6 @@ if (!empty($photoId) && is_numeric($photoId) && isset($pdo)) {
             <a href="photos.php" class="btn btn-primary">Return to Gallery</a>
         </div>
     <?php endif; ?>
-</main>
+</section>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
