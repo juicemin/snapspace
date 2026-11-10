@@ -128,12 +128,13 @@ ALTER TABLE `photo`
   ADD CONSTRAINT `image_album` FOREIGN KEY (`idalbum`) REFERENCES `album` (`idalbum`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `photo_creator` FOREIGN KEY (`idcreator`) REFERENCES `creator` (`idcreator`) ON DELETE CASCADE ON UPDATE CASCADE;
 
-CREATE TABLE `administrator` (
-    `idadministrator` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `user_account` (
+    `iduser` int(11) NOT NULL AUTO_INCREMENT,
     `username` varchar(50) NOT NULL,
     `password_hash` varchar(255) NOT NULL,
-    PRIMARY KEY (`idadministrator`),
-    UNIQUE KEY `administrator_username_unique` (`username`)
+    `role` enum('user', 'admin') NOT NULL DEFAULT 'user',
+    PRIMARY KEY (`iduser`),
+    UNIQUE KEY `user_account_username_unique` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `creator`
@@ -355,17 +356,67 @@ VALUES
     8
   );
 
-/* Development administrator account
--Username: admin
--The password is communicated privately to group members.*/
+  UPDATE creator
+  SET imageurl = CASE idcreator
+      WHEN 1 THEN 'assets/images/creators/birdbird-tan.png'
+      WHEN 2 THEN 'assets/images/creators/jamis-tang.jpg'
+      WHEN 3 THEN 'assets/images/creators/heehee-wong.jpg'
+      WHEN 4 THEN 'assets/images/creators/batiq-yaw.png'
+  END
+  WHERE idcreator IN (1, 2, 3, 4);
 
-INSERT INTO `administrator` (`username`, `password_hash`)
+  UPDATE photo
+  SET imageurl = CASE idphoto
+      WHEN 1 THEN 'assets/images/photos/city-crossing.jpg'
+      WHEN 2 THEN 'assets/images/photos/quiet-alley.jpg'
+      WHEN 3 THEN 'assets/images/photos/distant-hills.jpg'
+      WHEN 4 THEN 'assets/images/photos/morning-lake.jpg'
+      WHEN 5 THEN 'assets/images/photos/neon-street.jpg'
+      WHEN 6 THEN 'assets/images/photos/night-traffic.jpg'
+      WHEN 7 THEN 'assets/images/photos/leaf-patterns.jpg'
+      WHEN 8 THEN 'assets/images/photos/stone-texture.jpg'
+      WHEN 9 THEN 'assets/images/photos/morning-routine.jpg'
+      WHEN 10 THEN 'assets/images/photos/coffee-break.jpg'
+      WHEN 11 THEN 'assets/images/photos/studio-portrait.jpg'
+      WHEN 12 THEN 'assets/images/photos/window-portrait.jpg'
+      WHEN 13 THEN 'assets/images/photos/abstract-geometry.jpg'
+      WHEN 14 THEN 'assets/images/photos/shadow-forms.jpg'
+      WHEN 15 THEN 'assets/images/photos/market-colours.jpg'
+      WHEN 16 THEN 'assets/images/photos/painted-walls.jpg'
+  END
+  WHERE idphoto BETWEEN 1 AND 16;
+
+  UPDATE album
+  SET imageurl = CASE idalbum
+      WHEN 1 THEN 'assets/images/photos/city-crossing.jpg'
+      WHEN 2 THEN 'assets/images/photos/distant-hills.jpg'
+      WHEN 3 THEN 'assets/images/photos/neon-street.jpg'
+      WHEN 4 THEN 'assets/images/photos/leaf-patterns.jpg'
+      WHEN 5 THEN 'assets/images/photos/morning-routine.jpg'
+      WHEN 6 THEN 'assets/images/photos/studio-portrait.jpg'
+      WHEN 7 THEN 'assets/images/photos/abstract-geometry.jpg'
+      WHEN 8 THEN 'assets/images/photos/market-colours.jpg'
+  END
+  WHERE idalbum BETWEEN 1 AND 8;
+
+/* Demonstration accounts.
+   Plaintext passwords are communicated privately. */
+
+INSERT INTO `user_account`(`username`, `password_hash`, `role`)
 VALUES (
-    'admin',
-    '$2y$10$4vh0t9jBiRWpYXsf6LnFguOLnm1RFiqVBfznZhTxgMKmz72qvPZ12'
+  'admin',
+  '$2y$10$4vh0t9jBiRWpYXsf6LnFguOLnm1RFiqVBfznZhTxgMKmz72qvPZ12',
+  'admin'
+),
+(
+  'admin2',
+  '$2y$10$ncXPoyzn3XFYiBLVvtOrF.paDuWPGvGEI0qHVMsppNZQ46ZZdWLGS',
+  'admin'
+),
+(
+  'demo_user',
+  '$2y$10$iZ1cheJI4pCae287OS1wueS4eYejzFk7ZMuahfji1xbzBgwesZ/fe',
+  'user'
 );
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

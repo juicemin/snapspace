@@ -1,5 +1,12 @@
 <?php
 
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+$accessError = $_SESSION['access_error'] ?? '';
+unset($_SESSION['access_error']);
+
 require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
@@ -54,6 +61,17 @@ try {
 require_once __DIR__ . '/includes/header.php';
 ?>
 
+<?php if ($accessError !== ''): ?>
+    <section class="container section">
+        <div
+            class="public-message public-message-error"
+            role="alert"
+        >
+            <?= escape($accessError) ?>
+        </div>
+    </section>
+<?php endif; ?>
+
 <section class="home-hero">
     <div class="container home-hero-grid">
 
@@ -77,6 +95,8 @@ require_once __DIR__ . '/includes/header.php';
                     Search Snap Space
                 </label>
 
+               <div class="search-input-wrapper">
+
                 <input
                     class="form-control"
                     type="search"
@@ -84,8 +104,22 @@ require_once __DIR__ . '/includes/header.php';
                     name="q"
                     maxlength="100"
                     placeholder="Search creators, albums or photos..."
+                    autocomplete="off"
+                    aria-autocomplete="list"
+                    aria-controls="home-search-suggestions"
+                    data-search-suggestions
                     required
                 >
+
+                <div
+                    class="search-suggestions"
+                    id="home-search-suggestions"
+                    role="listbox"
+                    aria-live="polite"
+                    hidden
+                ></div>
+
+            </div>
 
                 <button class="button" type="submit">
                     Search
@@ -111,8 +145,8 @@ require_once __DIR__ . '/includes/header.php';
 
         <div class="home-hero-image">
             <img
-                src="/snapspace/assets/images/image-placeholder.png"
-                alt="Featured photography placeholder"
+                src="/snapspace/assets/images/photos/city-crossing.jpg"
+                alt="Featured city photography from Snap Space"
             >
         </div>
 
@@ -142,7 +176,7 @@ require_once __DIR__ . '/includes/header.php';
 
     <?php if ($featuredCreators): ?>
 
-        <div class="card-grid">
+        <div class="card-grid home-card-grid">
 
             <?php foreach ($featuredCreators as $creator): ?>
 
@@ -211,7 +245,7 @@ require_once __DIR__ . '/includes/header.php';
 
         <?php if ($featuredAlbums): ?>
 
-            <div class="card-grid">
+            <div class="card-grid home-card-grid">
 
                 <?php foreach ($featuredAlbums as $album): ?>
 

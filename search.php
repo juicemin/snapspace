@@ -143,6 +143,8 @@ require_once __DIR__ . '/includes/header.php';
                 Search creators, albums or photos
             </label>
 
+            <div class="search-input-wrapper">
+
             <input
                 class="form-control"
                 type="search"
@@ -151,8 +153,22 @@ require_once __DIR__ . '/includes/header.php';
                 maxlength="100"
                 value="<?= escape($searchTerm) ?>"
                 placeholder="Search creators, albums or photos..."
+                autocomplete="off"
+                aria-autocomplete="list"
+                aria-controls="search-page-suggestions"
+                data-search-suggestions
                 required
             >
+
+            <div
+                class="search-suggestions"
+                id="search-page-suggestions"
+                role="listbox"
+                aria-live="polite"
+                hidden
+            ></div>
+
+        </div>
 
             <button class="button" type="submit">
                 Search

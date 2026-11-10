@@ -24,39 +24,70 @@
 
 .filter-sort-form {
     display: flex;
+    margin: 24px 0;
+    padding: 20px;
+    gap: 16px;
+    align-items: flex-end;
     flex-wrap: wrap;
-    gap: 1.5rem;
-    padding: 1rem 1.25rem;
-    background-color: #f7f4f0;
+    background-color: #f7f1e8;
+    border: 1px solid #d8c7b8;
     border-radius: 8px;
-    border: 1px solid #e2dad2;
 }
 
 .filter-sort-form .form-group {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
+    flex: 1 1 220px;
+    min-width: 0;
 }
 
 .filter-sort-form label {
+    display: block;
+    margin-bottom: 6px;
+    color: #2a211c;
     font-size: 0.95rem;
-    font-weight: 600;
-    color: #4a382c;
+    font-weight: 700;
 }
 
+.filter-sort-form input,
 .filter-sort-form select {
-    padding: 0.45rem 1rem;
-    border: 1px solid #c7b9b0;
-    border-radius: 4px;
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    padding: 10px 12px;
+    color: #2a211c;
     background-color: #ffffff;
-    font-size: 0.95rem;
-    color: #333333;
-    outline: none;
+    border: 1px solid #967259;
+    border-radius: 6px;
+    font: inherit;
+}
+
+.filter-sort-form input:focus,
+.filter-sort-form select:focus {
+    border-color: #6f4e37;
+    outline: 3px solid #d8c2ad;
+    outline-offset: 1px;
+}
+
+.filter-sort-form .btn-secondary {
+    display: inline-flex;
+    min-height: 46px;
+    padding: 10px 18px;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    background-color: #6f4e37;
+    border: 1px solid #6f4e37;
+    border-radius: 6px;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
     cursor: pointer;
 }
 
-.filter-sort-form select:focus {
-    border-color: #5c4333;
+.filter-sort-form .btn-secondary:hover,
+.filter-sort-form .btn-secondary:focus {
+    color: #ffffff;
+    background-color: #3b2a23;
+    border-color: #3b2a23;
 }
 
 .photo-grid {

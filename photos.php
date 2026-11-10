@@ -1,6 +1,6 @@
 <?php
 // photos.php - Snap Space Photo Gallery
-$pageTitle = "Photo Gallery - Snap Space";
+$pageTitle = "Photo Gallery";
 require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/header.php';
 
@@ -16,6 +16,9 @@ if (isset($pdo)) {
 
 $selectedAlbum = isset($_GET['album']) ? trim($_GET['album']) : '';
 $selectedSort = isset($_GET['sort']) ? trim($_GET['sort']) : 'latest';
+$query = isset($_GET['q']) && is_string($_GET['q'])
+    ? trim($_GET['q'])
+    : '';
 
 $sql = "SELECT p.idphoto, p.title AS photo_title, p.imageurl, 
                c.name AS creator_name, c.idcreator,
@@ -26,6 +29,22 @@ $sql = "SELECT p.idphoto, p.title AS photo_title, p.imageurl,
         WHERE 1=1";
 
 $params = [];
+
+if ($query !== '' && strlen($query) <= 100) {
+    $escapedQuery = strtr(
+        $query,
+        [
+            '!' => '!!',
+            '%' => '!%',
+            '_' => '!_'
+        ]
+    );
+
+    $sql .= " AND p.title LIKE :photo_title ESCAPE '!'";
+
+    $params[':photo_title'] =
+        '%' . $escapedQuery . '%';
+}
 
 if (!empty($selectedAlbum) && is_numeric($selectedAlbum)) {
     $sql .= " AND p.idalbum = :idalbum";
@@ -54,37 +73,124 @@ if (isset($pdo)) {
 
 <link rel="stylesheet" href="css/photo.css">
 
-<main class="gallery-container">
+<section class="gallery-container">
     <header class="gallery-header">
         <h1>Photo Gallery</h1>
         <p class="subtitle">Browse curated photo collections and explore featured shots from our creative community.</p>
 
-        <form method="GET" action="photos.php" class="filter-sort-form">
+        <form
+            method="get"
+            action="photos.php"
+            class="filter-sort-form"
+        >
+            <div class="form-group search-input-wrapper">
+
+                <label for="photo-search">
+                    Search photo titles:
+                </label>
+
+                <input
+                    class="form-control"
+                    type="search"
+                    id="photo-search"
+                    name="q"
+                    maxlength="100"
+                    value="<?= htmlspecialchars(
+                        $query,
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>"
+                    placeholder="Search photo titles..."
+                    autocomplete="off"
+                    aria-autocomplete="list"
+                    aria-controls="photo-search-suggestions"
+                    data-search-suggestions
+                    data-suggestion-type="photo"
+                >
+
+                <div
+                    class="search-suggestions"
+                    id="photo-search-suggestions"
+                    role="listbox"
+                    aria-live="polite"
+                    hidden
+                ></div>
+
+            </div>
+
             <div class="form-group">
-                <label for="album">Filter by Album:</label>
-                <select name="album" id="album" onchange="this.form.submit()">
+                <label for="album">
+                    Filter by Album:
+                </label>
+
+                <select name="album" id="album">
                     <option value="">All Albums</option>
+
                     <?php foreach ($albumList as $album): ?>
-                        <option value="<?php echo htmlspecialchars($album['idalbum']); ?>" 
-                            <?php echo ($selectedAlbum == $album['idalbum']) ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($album['title']); ?>
+                        <option
+                            value="<?= (int) $album['idalbum'] ?>"
+                            <?= (string) $selectedAlbum ===
+                                (string) $album['idalbum']
+                                    ? 'selected'
+                                    : '' ?>
+                        >
+                            <?= htmlspecialchars(
+                                $album['title'],
+                                ENT_QUOTES,
+                                'UTF-8'
+                            ) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="sort">Sort by:</label>
-                <select name="sort" id="sort" onchange="this.form.submit()">
-                    <option value="latest" <?php echo ($selectedSort === 'latest') ? 'selected' : ''; ?>>Latest Added</option>
-                    <option value="title_asc" <?php echo ($selectedSort === 'title_asc') ? 'selected' : ''; ?>>Title (A-Z)</option>
-                    <option value="title_desc" <?php echo ($selectedSort === 'title_desc') ? 'selected' : ''; ?>>Title (Z-A)</option>
+                <label for="sort">
+                    Sort by:
+                </label>
+
+                <select name="sort" id="sort">
+                    <option
+                        value="latest"
+                        <?= $selectedSort === 'latest'
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        Latest Added
+                    </option>
+
+                    <option
+                        value="title_asc"
+                        <?= $selectedSort === 'title_asc'
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        Title (A–Z)
+                    </option>
+
+                    <option
+                        value="title_desc"
+                        <?= $selectedSort === 'title_desc'
+                            ? 'selected'
+                            : '' ?>
+                    >
+                        Title (Z–A)
+                    </option>
                 </select>
             </div>
-            <noscript>
-                <button type="submit" class="btn btn-secondary">Apply</button>
-            </noscript>
+
+            <button
+                type="submit"
+                class="btn btn-secondary"
+            >
+                Apply Filters
+            </button>
+
+            <a href="photos.php" class="btn btn-secondary">
+                Clear Filters
+            </a>
         </form>
+
     </header>
 
     <section class="photo-grid">
@@ -120,6 +226,6 @@ if (isset($pdo)) {
             </div>
         <?php endif; ?>
     </section>
-</main>
+</section>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

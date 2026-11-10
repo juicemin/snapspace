@@ -5,13 +5,49 @@ require_once __DIR__ . '/includes/functions.php';
 
 $pageTitle = 'Creators';
 
-$stmt = $pdo->query(
-    'SELECT idcreator, name, website, imageurl
-     FROM creator
-     ORDER BY name ASC'
-);
+$query = trim($_GET['q'] ?? '');
+$errorMessage = '';
+$creators = [];
 
-$creators = $stmt->fetchAll();
+if (strlen($query) > 100) {
+    $errorMessage =
+        'Enter a creator name of 100 characters or fewer.';
+} else {
+    try {
+        if ($query === '') {
+            $statement = $pdo->query(
+                'SELECT idcreator, name, website, imageurl
+                 FROM creator
+                 ORDER BY name ASC'
+            );
+        } else {
+            $escapedQuery = strtr(
+                $query,
+                [
+                    '!' => '!!',
+                    '%' => '!%',
+                    '_' => '!_'
+                ]
+            );
+
+            $statement = $pdo->prepare(
+                "SELECT idcreator, name, website, imageurl
+                 FROM creator
+                 WHERE name LIKE :query ESCAPE '!'
+                 ORDER BY name ASC"
+            );
+
+            $statement->execute([
+                'query' => '%' . $escapedQuery . '%'
+            ]);
+        }
+
+        $creators = $statement->fetchAll();
+    } catch (PDOException $exception) {
+        $errorMessage =
+            'Creators could not be loaded at this time.';
+    }
+}
 
 require_once __DIR__ . '/includes/header.php';
 ?>
@@ -24,9 +60,62 @@ require_once __DIR__ . '/includes/header.php';
         <p>Explore the creators and discover their albums and photos.</p>
     </div>
 
-    <?php if (empty($creators)): ?>
+        <form
+        class="search-form creator-search"
+        action="/snapspace/creators.php"
+        method="get"
+    >
+        <label
+            class="visually-hidden"
+            for="creator-search"
+        >
+            Search creators
+        </label>
+
+        <div class="search-input-wrapper">
+
+            <input
+                class="form-control"
+                type="search"
+                id="creator-search"
+                name="q"
+                maxlength="100"
+                value="<?= escape($query) ?>"
+                placeholder="Search creator names..."
+                autocomplete="off"
+                aria-autocomplete="list"
+                aria-controls="creator-search-suggestions"
+                data-search-suggestions
+                data-suggestion-type="creator"
+            >
+
+            <div
+                class="search-suggestions"
+                id="creator-search-suggestions"
+                role="listbox"
+                aria-live="polite"
+                hidden
+            ></div>
+
+        </div>
+
+        <button class="button" type="submit">
+            Search
+        </button>
+    </form>
+
+    <?php if ($errorMessage !== ''): ?>
+        <div class="public-message public-message-error">
+            <?= escape($errorMessage) ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (
+        $errorMessage === '' &&
+        empty($creators)
+    ): ?>
         <div class="creator-empty">
-            <p>No creators are available yet.</p>
+            <p>No creators found.</p>
         </div>
     <?php else: ?>
         <div class="creator-grid">
