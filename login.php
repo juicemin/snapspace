@@ -160,14 +160,26 @@ $pageTitle = 'Login';
             <div class="admin-form-group">
                 <label for="password">Password</label>
 
-                <input
-                    class="admin-form-control"
-                    type="password"
-                    id="password"
-                    name="password"
-                    autocomplete="current-password"
-                    required
-                >
+                <div class="admin-password-wrapper">
+                    <input
+                        class="admin-form-control"
+                        type="password"
+                        id="password"
+                        name="password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        class="admin-password-toggle"
+                        type="button"
+                        id="passwordToggle"
+                        aria-label="Show password"
+                        aria-pressed="false"
+                    >
+                        Show
+                    </button>
+                </div>
             </div>
 
             <button
@@ -189,6 +201,43 @@ $pageTitle = 'Login';
     </section>
 
 </main>
+
+<script>
+    const passwordInput =
+        document.getElementById('password');
+
+    const passwordToggle =
+        document.getElementById('passwordToggle');
+
+    passwordToggle.addEventListener('click', function () {
+        const passwordIsHidden =
+            passwordInput.type === 'password';
+
+        if (passwordIsHidden) {
+            passwordInput.type = 'text';
+            passwordToggle.textContent = 'Hide';
+            passwordToggle.setAttribute(
+                'aria-label',
+                'Hide password'
+            );
+            passwordToggle.setAttribute(
+                'aria-pressed',
+                'true'
+            );
+        } else {
+            passwordInput.type = 'password';
+            passwordToggle.textContent = 'Show';
+            passwordToggle.setAttribute(
+                'aria-label',
+                'Show password'
+            );
+            passwordToggle.setAttribute(
+                'aria-pressed',
+                'false'
+            );
+        }
+    });
+</script>
 
 </body>
 </html>
