@@ -165,7 +165,6 @@ require_once __DIR__ . '/includes/header.php';
 
     <div class="section-heading-row">
         <div>
-            <p class="eyebrow">Featured Collection</p>
             <h2>Featured Creators</h2>
         </div>
 
@@ -234,7 +233,6 @@ require_once __DIR__ . '/includes/header.php';
 
         <div class="section-heading-row">
             <div>
-                <p class="eyebrow">Curated Collections</p>
                 <h2>Featured Albums</h2>
             </div>
 
