@@ -62,10 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['username'] = $account['username'];
                 $_SESSION['role'] = $account['role'];
 
-                /*
-                 * Temporary compatibility for the Album module,
-                 * which still checks admin_id and admin_name.
-                 */
                 unset(
                     $_SESSION['admin_id'],
                     $_SESSION['admin_name']

@@ -4,9 +4,6 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
-/*
- * A guest must log in first.
- */
 if (empty($_SESSION['user_id'])) {
     $_SESSION['login_error'] =
         'Please log in to access the administration area.';
@@ -15,9 +12,6 @@ if (empty($_SESSION['user_id'])) {
     exit;
 }
 
-/*
- * A logged-in ordinary user cannot access administration.
- */
 if (($_SESSION['role'] ?? '') !== 'admin') {
     $_SESSION['access_error'] =
         'Administrator access is required.';
