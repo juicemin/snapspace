@@ -1,0 +1,408 @@
+/* css/photo.css - Photo Module Styles */
+
+.gallery-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+.gallery-header {
+    margin-bottom: 2rem;
+}
+
+.gallery-header h1 {
+    font-size: 2.2rem;
+    color: #3b281c; 
+    margin-bottom: 0.5rem;
+}
+
+.gallery-header .subtitle {
+    color: #6c5a4f;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.filter-sort-form {
+    display: flex;
+    margin: 24px 0;
+    padding: 20px;
+    gap: 16px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    background-color: #f7f1e8;
+    border: 1px solid #d8c7b8;
+    border-radius: 8px;
+}
+
+.filter-sort-form .form-group {
+    flex: 1 1 220px;
+    min-width: 0;
+}
+
+.filter-sort-form label {
+    display: block;
+    margin-bottom: 6px;
+    color: #2a211c;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.filter-sort-form input,
+.filter-sort-form select {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    padding: 10px 12px;
+    color: #2a211c;
+    background-color: #ffffff;
+    border: 1px solid #967259;
+    border-radius: 6px;
+    font: inherit;
+}
+
+.filter-sort-form input:focus,
+.filter-sort-form select:focus {
+    border-color: #6f4e37;
+    outline: 3px solid #d8c2ad;
+    outline-offset: 1px;
+}
+
+.filter-sort-form .btn-secondary {
+    display: inline-flex;
+    min-height: 46px;
+    padding: 10px 18px;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    background-color: #6f4e37;
+    border: 1px solid #6f4e37;
+    border-radius: 6px;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.filter-sort-form .btn-secondary:hover,
+.filter-sort-form .btn-secondary:focus {
+    color: #ffffff;
+    background-color: #3b2a23;
+    border-color: #3b2a23;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.photo-card {
+    background: #ffffff;
+    border: 1px solid #e0d8d0;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.photo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.photo-thumb-wrap {
+    width: 100%;
+    height: 220px;
+    background-color: #f0ece9;
+    overflow: hidden;
+}
+
+.photo-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.photo-info {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.photo-info .photo-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #2b1f17;
+    margin-bottom: 0.4rem;
+}
+
+.photo-info .creator-name,
+.photo-info .album-name {
+    font-size: 0.9rem;
+    color: #66554b;
+    margin-bottom: 0.25rem;
+}
+
+.btn-view-details {
+    display: inline-block;
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    background-color: #2f2a28; /* 深棕黑色背景 */
+    color: #ffffff !important;  /* 强制文字始终显示为白色 */
+    text-decoration: none !important;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-view-details:hover {
+    background-color: #4b3e39;
+    color: #ffffff !important;
+}
+
+.no-records {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 1rem;
+    color: #7b6c62;
+    font-size: 1.1rem;
+}
+
+/* --- Photo Details Page Styles --- */
+
+.details-breadcrumb {
+    margin-bottom: 1.5rem;
+}
+
+.back-link {
+    color: #5c4333;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* Two-column layout corresponding to Wireframe 7.8 */
+.photo-details-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 3rem;
+    margin-bottom: 3.5rem;
+    align-items: start;
+}
+
+.photo-main-display {
+    background-color: #f7f4f0;
+    border: 1px solid #e0d8d0;
+    border-radius: 8px;
+    padding: 0.75rem;
+    overflow: hidden;
+}
+
+.detail-large-image {
+    width: 100%;
+    max-height: 520px;
+    object-fit: contain;
+    border-radius: 4px;
+    display: block;
+}
+
+.photo-metadata-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.detail-photo-title {
+    font-size: 2rem;
+    color: #2b1f17;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.meta-item-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ede7e1;
+}
+
+.meta-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #7b6c62;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.meta-value {
+    font-size: 1.1rem;
+    color: #3b281c;
+}
+
+.btn-outline {
+    align-self: flex-start;
+    margin-top: 0.3rem;
+    padding: 0.45rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a382c;
+    border: 1px solid #4a382c;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+    background-color: #4a382c;
+    color: #ffffff;
+}
+
+.photo-story-text {
+    font-size: 0.95rem;
+    color: #4a382c;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.related-photos-section {
+    margin-top: 3rem;
+    border-top: 2px solid #ede7e1;
+    padding-top: 2rem;
+}
+
+.related-photos-section h2 {
+    font-size: 1.4rem;
+    color: #3b281c;
+    margin-bottom: 1.5rem;
+}
+
+.empty-state-card {
+    text-align: center;
+    padding: 5rem 1rem;
+    background-color: #faf8f5;
+    border: 1px dashed #d5cbc2;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.empty-state-card h2 {
+    color: #3b281c;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state-card p {
+    color: #6c5a4f;
+    margin-bottom: 1.5rem;
+}
+
+/* Responsive adjustment for tablet/mobile */
+@media (max-width: 820px) {
+    .photo-details-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+/* --- Admin Manage Photos Specific Layout (Matches Wireframe 7.10) --- */
+
+.admin-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    align-items: flex-end;
+    background-color: #f7f4f0;
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    border: 1px solid #e2dad2;
+    margin-bottom: 1.5rem;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.filter-item label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a382c;
+}
+
+.search-input-group {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.search-input-group input {
+    padding: 0.45rem 0.75rem;
+    border: 1px solid #c7b9b0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.filter-item select {
+    padding: 0.45rem 0.85rem;
+    border: 1px solid #c7b9b0;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.table-img-wrap {
+    width: 60px;
+    height: 45px;
+    background: #eae5e0;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.action-buttons-inline {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.btn-action {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.edit-btn {
+    background-color: #5c4333;
+    color: #ffffff;
+}
+
+.delete-btn {
+    background-color: #8c3b3b;
+    color: #ffffff;
+}
+
+.edit-btn:hover { background-color: #3f2c20; }
+.delete-btn:hover { background-color: #6b2626; }

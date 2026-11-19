@@ -1,0 +1,283 @@
+
+/* Creator Listing Page */
+.creator-page {
+    padding-top: 40px;
+    padding-bottom: 60px;
+}
+
+.creator-page-heading {
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.creator-page-heading h1 {
+    margin-bottom: 10px;
+    color: #222;
+    font-size: 2rem;
+}
+
+.creator-page-heading p {
+    margin: 0;
+    color: #666;
+    line-height: 1.6;
+}
+
+.creator-search {
+    max-width: 650px;
+    margin: 0 auto 40px;
+    align-items: flex-end;
+}
+
+.creator-search .search-input-wrapper {
+    flex: 1;
+}
+
+.creator-search + .public-message {
+    margin-bottom: 30px;
+}
+
+.creator-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 300px));
+    gap: 80px;
+    justify-content: center;
+}
+
+.creator-card {
+    width: 100%;
+    max-width: 300px;
+    overflow: hidden;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.creator-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+}
+
+.creator-image-link {
+    display: block;
+    overflow: hidden;
+    background: #f3f3f3;
+}
+
+.creator-image {
+    display: block;
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+}
+
+.creator-card-content {
+    padding: 20px;
+}
+
+.creator-card-content h2 {
+    margin: 0 0 12px;
+    font-size: 1.25rem;
+}
+
+.creator-card-content h2 a {
+    color: #222;
+    text-decoration: none;
+}
+
+.creator-card-content h2 a:hover {
+    color: #555;
+}
+
+.creator-website {
+    display: inline-block;
+    margin-bottom: 16px;
+    color: #555;
+    font-size: 0.95rem;
+    text-decoration: underline;
+    overflow-wrap: anywhere;
+}
+
+.creator-view-link {
+    display: block;
+    padding: 11px 16px;
+    border-radius: 6px;
+    background: #222;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.creator-view-link:hover {
+    background: #444;
+}
+
+.creator-empty {
+    padding: 40px 20px;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    color: #666;
+    text-align: center;
+}
+
+@media (max-width: 900px) {
+    .creator-grid {
+        grid-template-columns: repeat(2, minmax(0, 300px));
+        gap: 20px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .creator-page {
+        padding-top: 28px;
+        padding-bottom: 40px;
+    }
+
+    .creator-grid {
+    grid-template-columns: minmax(0, 340px);
+    justify-content: center;
+    }
+
+    .creator-card {
+        max-width: 340px;
+    }
+
+    .creator-image {
+        height: 220px;
+    }
+
+    .creator-card-content {
+        padding: 16px;
+    }
+}
+
+
+/* Creator Details Page */
+.creator-detail-page {
+    padding-top: 30px;
+    padding-bottom: 60px;
+}
+
+.creator-back-link {
+    display: inline-block;
+    margin-bottom: 28px;
+    color: #444;
+    text-decoration: none;
+}
+
+.creator-back-link:hover {
+    text-decoration: underline;
+}
+
+.creator-profile {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    align-items: center;
+    gap: 36px;
+    margin-bottom: 52px;
+    padding: 30px;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.creator-profile-image-wrapper {
+    overflow: hidden;
+    border-radius: 10px;
+    background: #f3f3f3;
+}
+
+.creator-profile-image {
+    display: block;
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+
+.creator-eyebrow {
+    margin: 0 0 10px;
+    color: #777;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.creator-profile-content h1 {
+    margin: 0 0 18px;
+    color: #222;
+    font-size: 2.2rem;
+    overflow-wrap: anywhere;
+}
+
+.creator-detail-section {
+    margin-top: 44px;
+}
+
+.creator-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.creator-section-heading h2 {
+    margin: 0;
+    color: #222;
+    font-size: 1.7rem;
+}
+
+.creator-section-heading span {
+    color: #777;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.creator-section-empty {
+    padding: 28px 20px;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    color: #666;
+    text-align: center;
+}
+
+.creator-photo-comment {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.creator-card-content h3 {
+    margin: 0 0 14px;
+    color: #222;
+    font-size: 1.15rem;
+}
+
+@media (max-width: 700px) {
+    .creator-profile {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        padding: 20px;
+    }
+
+    .creator-profile-image {
+        height: 240px;
+    }
+
+    .creator-profile-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .creator-detail-section {
+        margin-top: 34px;
+    }
+
+    .creator-section-heading h2 {
+        font-size: 1.4rem;
+    }
+}

@@ -5,7 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 
 $pageTitle = 'Administration Dashboard';
 $activeSection = 'dashboard';
-$adminName = $_SESSION['admin_name'] ?? 'Admin';
+$adminName = $_SESSION['username'] ?? 'Admin';
 
 $counts = [
     'creators' => 0,

@@ -1,0 +1,54 @@
+/* Album module: reuse the administration brown palette without changing shared styles. */
+.album-module {
+    --album-brown: #6f4e37;
+    --album-dark: #34241e;
+    --album-border: #d8c8b8;
+    box-sizing: border-box;
+    width: min(1160px, 100%);
+    margin: 0 auto;
+    padding: 32px 20px;
+    color: #2a211c;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+.album-module *, .album-module *::before, .album-module *::after { box-sizing: border-box; }
+.album-module h1 { margin: 0 0 12px; color: var(--album-dark); font-size: clamp(1.8rem, 4vw, 2.5rem); line-height: 1.2; }
+.album-module h2, .album-module h3 { margin: 0 0 10px; line-height: 1.35; }
+.album-module a { color: var(--album-brown); text-underline-offset: 3px; }
+.album-module a:hover { color: var(--album-dark); }
+.album-module :focus-visible { outline: 3px solid #967259; outline-offset: 3px; }
+.album-filters { display: flex; flex-wrap: wrap; align-items: end; gap: 16px; padding: 20px; margin: 24px 0; background: #f7f1e8; border: 1px solid var(--album-border); border-radius: 8px; }
+.album-filters > div { flex: 1 1 220px; min-width: 0; }
+.album-module label { display: block; margin-bottom: 6px; font-weight: 700; }
+.album-module input, .album-module select { width: 100%; min-width: 0; min-height: 46px; padding: 10px 12px; border: 1px solid #967259; border-radius: 6px; background: #fff; color: #2a211c; font: inherit; }
+.album-module .album-button { display: inline-flex; justify-content: center; align-items: center; min-height: 46px; padding: 10px 18px; border: 1px solid var(--album-brown); border-radius: 6px; background: var(--album-brown); color: #fff; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+.album-module .album-button:hover { background: var(--album-dark); color: #fff; }
+.album-module .album-danger { background: #a33d3d; border-color: #a33d3d; }
+.album-module button:disabled { opacity: .6; cursor: not-allowed; }
+.album-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 24px; }
+.album-card { min-width: 0; border: 1px solid var(--album-border); border-radius: 8px; background: #fff; }
+.album-card img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 7px 7px 0 0; }
+.album-card-content { padding: 20px; }
+.album-card-content p:last-child { margin-bottom: 0; }
+.album-no-image { display: grid; aspect-ratio: 4 / 3; place-items: center; background: #ede2d5; color: #574031; border-radius: 7px 7px 0 0; }
+.album-cover { display: block; max-width: 100%; width: auto; height: auto; max-height: 600px; object-fit: contain; margin: 24px 0; }
+.album-empty { padding: 24px; border: 1px solid var(--album-border); background: #f7f1e8; }
+.album-error { padding: 16px 20px; margin: 20px 0; border: 1px solid #dca4a4; border-radius: 6px; background: #f7dddd; color: #722b2b; }
+.album-error h2 { font-size: 1.1rem; }
+.album-error ul { margin-bottom: 0; padding-left: 24px; }
+.album-heading, .album-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+.album-heading { justify-content: space-between; margin-bottom: 24px; }
+.album-actions form { margin: 0; }
+.album-actions > a { display: inline-flex; align-items: center; min-height: 44px; }
+.album-admin { padding: 0; }
+.album-form { display: grid; gap: 24px; max-width: 700px; margin-top: 24px; }
+.album-help { margin: 8px 0 0; color: #574b42; font-size: .95rem; }
+.album-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+@media (max-width: 600px) {
+    .album-module { padding: 24px 16px; }
+    .album-admin { padding: 0; }
+    .album-filters { padding: 16px; }
+    .album-filters > div, .album-filters > button { flex-basis: 100%; }
+    .album-heading { align-items: flex-start; flex-direction: column; }
+}
